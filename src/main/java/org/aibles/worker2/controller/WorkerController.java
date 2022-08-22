@@ -1,19 +1,12 @@
 package org.aibles.worker2.controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
-import org.aibles.worker2.dto.SearchSpecification;
-import org.aibles.worker2.dto.SearchSpecificationBuilder;
 import org.aibles.worker2.dto.WorkerDto;
 import org.aibles.worker2.entity.Worker;
 import org.aibles.worker2.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,11 +38,16 @@ public class WorkerController {
     return workerService.created(workerDto);
   }
 
-
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<WorkerDto> list(@RequestParam(required = false) Map<String, String> params) {
-    return workerService.list(params);
+  public List<Worker> list() {
+    return workerService.list();
+  }
+
+  @GetMapping("/api/v1/workers/search")
+  @ResponseStatus(HttpStatus.OK)
+  public List<WorkerDto> listSearch(String search, @RequestBody @Valid WorkerDto workerDto) {
+    return workerService.listSearch(search, workerDto);
   }
 
 

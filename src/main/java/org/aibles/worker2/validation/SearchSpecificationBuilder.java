@@ -1,9 +1,9 @@
-package org.aibles.worker2.dto;
+package org.aibles.worker2.validation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import liquibase.pro.packaged.T;
+import org.aibles.worker2.entity.Worker;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SearchSpecificationBuilder {
@@ -13,18 +13,18 @@ public class SearchSpecificationBuilder {
     this.searchCriteriaList = new ArrayList<>();
   }
 
-  public SearchSpecificationBuilder with(String fidd, Object value) {
-    searchCriteriaList.add(new SearchCriteria(fidd, value));
+  public SearchSpecificationBuilder with(String fidd, String operation, String value) {
+    searchCriteriaList.add(new SearchCriteria(fidd, operation, value));
     return this;
   }
 
-  public Specification<T> build() {
+  public Specification<Worker> build() {
     if (searchCriteriaList.size() == 0) {
       return null;
     }
-    List<Specification<T>> specifications =
+    List<Specification<Worker>> specifications =
         searchCriteriaList.stream().map(SearchSpecification::new).collect(Collectors.toList());
-    Specification<T> result = specifications.get(0);
+    Specification<Worker> result = specifications.get(0);
     for (int i = 1; i < searchCriteriaList.size(); i++) {
       result = Specification.where(result).and(specifications.get(i));
     }

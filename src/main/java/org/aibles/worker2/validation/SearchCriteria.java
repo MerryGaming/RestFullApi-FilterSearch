@@ -1,4 +1,4 @@
-package org.aibles.worker2.dto;
+package org.aibles.worker2.validation;
 
 
 import java.util.Objects;
@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class SearchCriteria {
   private String fidd;
-  private String geration;
+  private String operation;
   private Objects value;
 
-  public SearchCriteria(String fidd, Object value) {
+  public SearchCriteria(String fidd, String operation,Object value) {
   }
 }
