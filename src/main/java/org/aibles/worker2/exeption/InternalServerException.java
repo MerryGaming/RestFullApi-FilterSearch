@@ -1,16 +1,13 @@
 package org.aibles.worker2.exeption;
 
-public class InternalServerException extends RuntimeException {
-    private final String message;
+import org.aibles.worker2.exeption.handle.ExceptionHandle;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public InternalServerException(String message) {
-        super();
-        this.message = message;
-    }
 
-    @Override
-    public String getMessage() {
-        return this.message;
+public class InternalServerException extends Exception {
+    public InternalServerException(String message, HttpStatus httpStatus){
+        super(message,httpStatus);
     }
 
 }
