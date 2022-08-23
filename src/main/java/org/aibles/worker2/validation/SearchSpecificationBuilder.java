@@ -3,28 +3,22 @@ package org.aibles.worker2.validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.aibles.worker2.entity.Worker;
 import org.springframework.data.jpa.domain.Specification;
 
-public class SearchSpecificationBuilder {
+@RequiredArgsConstructor
+public class SearchSpecificationBuilder<T> {
   private final List<SearchCriteria> searchCriteriaList;
 
-  public SearchSpecificationBuilder() {
-    this.searchCriteriaList = new ArrayList<>();
-  }
 
-  public SearchSpecificationBuilder with(String fidd, String operation, String value) {
-    searchCriteriaList.add(new SearchCriteria(fidd, operation, value));
-    return this;
-  }
-
-  public Specification<Worker> build() {
+  public Specification<T> build() {
     if (searchCriteriaList.size() == 0) {
       return null;
     }
-    List<Specification<Worker>> specifications =
-        searchCriteriaList.stream().map(SearchSpecification::new).collect(Collectors.toList());
-    Specification<Worker> result = specifications.get(0);
+    List<Specification<T>> specifications =
+        searchCriteriaList.stream().map(variable -> new  SearchSpecification<T>(variable)).collect(Collectors.toList());
+    Specification<T> result = specifications.get(0);
     for (int i = 1; i < searchCriteriaList.size(); i++) {
       result = Specification.where(result).and(specifications.get(i));
     }

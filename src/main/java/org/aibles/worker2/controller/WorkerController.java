@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aibles.worker2.dto.WorkerDto;
 import org.aibles.worker2.entity.Worker;
 import org.aibles.worker2.service.WorkerService;
+import org.aibles.worker2.validation.SearchList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -44,10 +45,10 @@ public class WorkerController {
     return workerService.list();
   }
 
-  @GetMapping("/api/v1/workers/search")
+  @PostMapping("/search")
   @ResponseStatus(HttpStatus.OK)
-  public List<WorkerDto> listSearch(String search, @RequestBody @Valid WorkerDto workerDto) {
-    return workerService.listSearch(search, workerDto);
+  public List<WorkerDto> listSearch(@RequestBody SearchList searchList) {
+    return workerService.listSearch(searchList);
   }
 
 

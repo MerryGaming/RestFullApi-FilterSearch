@@ -8,8 +8,6 @@ import lombok.Data;
 public class SearchCriteria {
   private String fidd;
   private String operation;
-  private Objects value;
+  private Object value;
 
-  public SearchCriteria(String fidd, String operation,Object value) {
-  }
 }

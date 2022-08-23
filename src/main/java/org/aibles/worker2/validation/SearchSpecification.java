@@ -4,12 +4,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import liquibase.pro.packaged.T;
+import lombok.Data;
 import org.aibles.worker2.entity.Worker;
 import org.aibles.worker2.validation.SearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
+@Data
 
-public class SearchSpecification implements Specification<Worker> {
+public class SearchSpecification<T> implements Specification<T> {
   private SearchCriteria criteria;
 
   public SearchSpecification(SearchCriteria criteria) {
@@ -17,7 +20,7 @@ public class SearchSpecification implements Specification<Worker> {
   }
 
   @Override
-  public Predicate toPredicate(Root<Worker> root, CriteriaQuery<?> query, CriteriaBuilder builder)  {
+  public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder)  {
 
     if (criteria.getOperation().equalsIgnoreCase(">")) {
       return builder.greaterThanOrEqualTo(
